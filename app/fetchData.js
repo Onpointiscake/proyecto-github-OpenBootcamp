@@ -6,7 +6,11 @@ const RANDOM_USER = "onpointiscake"
 let repositories = {}
 
 //0. Fetch Repositories
-await fetch(`https://api.github.com/users/${RANDOM_USER}/repos`)
+await fetch(`https://api.github.com/users/${RANDOM_USER}/repos` , {
+  headers: {
+    'Authorization': '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'
+  }
+})
   .then(res => {
     if (res.status >= 400) {
       throw new Error("Bad response from server");
@@ -28,11 +32,15 @@ function getRepos (data) {
 }
 
 // Task 2.
-/*
+
 function getCommits (repositoryData) {
   for (const key in repositoryData) {
        let emptyObjectWithCommits = {}
-        fetch(`https://api.github.com/repos/Onpointiscake/${repositoryData[key].name}/commits`)
+        fetch(`https://api.github.com/repos/Onpointiscake/${repositoryData[key].name}/commits` , {
+  headers: {
+    'Authorization': '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'
+  }
+})
       .then(res => {
         if (res.status >= 400) {
           throw new Error("Bad response from server");
@@ -40,19 +48,19 @@ function getCommits (repositoryData) {
         return res.json();
       })
       .then(repo => {
-        console.log(repo)
+        //console.log(repo)
          emptyObjectWithCommits = repo
       })
       .catch(err => {
         console.error(err);
       });
-    //console.log(`Repository: ${repositoryData[key].name}, commits: ${emptyObjectWithCommits.commit}`)
+    console.log(`Repository: ${repositoryData[key].name}, commits: ${emptyObjectWithCommits.commit}`)
   }
-}*/
+}
 
 // Print repos:
 console.log(getRepos(repositories))
 // Print commits of each repo:
-//console.log(getCommits(repositories))
+console.log(getCommits(repositories))
 
   //commits_url: 'https://api.github.com/repos/Onpointiscake/BestJob-client/commits
