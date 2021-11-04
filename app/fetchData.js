@@ -2,15 +2,10 @@ import fetch from 'cross-fetch';
 
 // Change this to a user you´d like to fetch data from:
 const RANDOM_USER = "onpointiscake"
-// Create empty object to fill data of the response:
-let repositories = {}
 
-//0. Fetch Repositories
-await fetch(`https://api.github.com/users/${RANDOM_USER}/repos` , {
-  headers: {
-    'Authorization': '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'
-  }
-})
+//Fetch Repositories
+let repositories = {}
+await fetch(`https://api.github.com/users/${RANDOM_USER}/repos`)
   .then(res => {
     if (res.status >= 400) {
       throw new Error("Bad response from server");
@@ -24,43 +19,21 @@ await fetch(`https://api.github.com/users/${RANDOM_USER}/repos` , {
     console.error(err);
   });
 
-// [Working] Task 1.
+//Task 1.
 function getRepos (data) {
   for (const key in data) {
       console.log(`Repository: ${data[key].name}`);
   }    
 }
-
 // Task 2.
-
-function getCommits (repositoryData) {
-  for (const key in repositoryData) {
-       let emptyObjectWithCommits = {}
-        fetch(`https://api.github.com/repos/Onpointiscake/${repositoryData[key].name}/commits` , {
-  headers: {
-    'Authorization': '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'
-  }
-})
-      .then(res => {
-        if (res.status >= 400) {
-          throw new Error("Bad response from server");
-        }
-        return res.json();
-      })
-      .then(repo => {
-        //console.log(repo)
-         emptyObjectWithCommits = repo
-      })
-      .catch(err => {
-        console.error(err);
-      });
-    console.log(`Repository: ${repositoryData[key].name}, commits: ${emptyObjectWithCommits.commit}`)
+async function getCommits(data) {
+  for (const key in data ) {
+    const response = await fetch(`https://api.github.com/repos/Onpointiscake/${data[key].name}/commits`)
+    todo = await response.json()
   }
 }
 
-// Print repos:
+// Print the repositories:
 console.log(getRepos(repositories))
-// Print commits of each repo:
+//Print the commits of repositories:
 console.log(getCommits(repositories))
-
-  //commits_url: 'https://api.github.com/repos/Onpointiscake/BestJob-client/commits
