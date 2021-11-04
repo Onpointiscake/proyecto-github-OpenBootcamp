@@ -29,7 +29,8 @@ function getRepos (data) {
 async function getCommits(data) {
   for (const key in data ) {
     const response = await fetch(`https://api.github.com/repos/Onpointiscake/${data[key].name}/commits`)
-    todo = await response.json()
+    commits = await response.json()
+    console.log(commits)
   }
 }
 
